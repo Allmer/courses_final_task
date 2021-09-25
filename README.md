@@ -1,3 +1,3 @@
 # courses_final_task
 
-This is courses diploma project
+This is a courses diploma project
