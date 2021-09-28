@@ -1,14 +1,25 @@
 import psycopg2
+import random
+import string
 from pages.main_page import MainPage
 from pages.admin_login_page import AdminLoginPage
 from pages.admin_page import AdminPage
 from pages.add_user_page import AddUserPage
 from pages.change_user_page import ChangeUserPage
-from db_query import do_find_user, do_find_group_for_user, do_delete_user
+from helpers.db_query import do_find_user, do_find_group_for_user, do_delete_user
 
 # User params
 user_name = "Oleg"
-user_email = "oleg-test@test.com"
+
+
+# random email generator
+def random_email_generator():
+    return ''.join(random.choice(string.ascii_letters) for x in range(10))
+
+
+user_email = random_email_generator() + "@mac-24.com"
+
+
 # Postgres db connection params
 myConnection = psycopg2.connect(host='localhost', user='postgres', password='postgres', dbname='postgres')
 
@@ -29,7 +40,7 @@ def test_tc_2(browser):
     admin_page.should_be_admin_page()
 
     # Add new user
-    admin_page.add_user()
+    admin_page.open_user_page()
     add_user_page = AddUserPage(browser)
     add_user_page.should_be_add_user_page()
     add_user_page.create_user(user_name, "123123Aa!", "123123Aa!")
@@ -39,7 +50,7 @@ def test_tc_2(browser):
     # Add group for the new user
     change_user_page.add_group_for_user()
     change_user_page.add_user_email(user_email)
-    change_user_page.save_new_user()
+    change_user_page.click_on_save_button()
 
     # Find added user in DB
     do_find_user(myConnection, user_name, user_email)

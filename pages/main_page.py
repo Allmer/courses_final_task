@@ -7,7 +7,8 @@ class MainPage(BasePage):
     def should_be_main_page(self):
         header_text = self.find_element(
             MainPageLocators.LOCATOR_MAIN_PAGE_H1).text
-        assert header_text == "Simple Django Application"
+        assert header_text == "Simple Django Application",\
+            f"Simple Django Application not eq {header_text}"
 
     def open_admin_page(self):
         self.find_element(MainPageLocators.LOCATOR_ADMIN_BUTTON).click()

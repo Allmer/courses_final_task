@@ -7,7 +7,8 @@ class AddUserPage(BasePage):
     def should_be_add_user_page(self):
         add_user_page_header = self.find_element(
             AddUserPageLocators.LOCATOR_ADD_USER_PAGE_HEADER).text
-        assert add_user_page_header == "Add user"
+        assert add_user_page_header == "Add user",\
+            f"Add user not eq {add_user_page_header}"
 
     def create_user(self, username: str, password: str, password_confirmation: str):
         username_field = self.find_element(
