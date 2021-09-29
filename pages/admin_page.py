@@ -7,10 +7,11 @@ class AdminPage(BasePage):
     def should_be_admin_page(self):
         admin_page_header = self.find_element(
             AdminPageLocators.LOCATOR_ADMIN_PAGE_HEADER).text
-        assert admin_page_header == "Site administration"
+        assert admin_page_header == "Site administration",\
+            f"Site administration not eq {admin_page_header}"
 
     def open_groups_page(self):
         self.find_element(AdminPageLocators.LOCATOR_GROUP_LINK).click()
 
-    def add_user(self):
+    def open_user_page(self):
         self.find_element(AdminPageLocators.LOCATOR_ADD_USER_BUTTON).click()
