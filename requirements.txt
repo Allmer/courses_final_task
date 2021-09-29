@@ -3,6 +3,5 @@ selenium
 psycopg2-binary
 allure-pytest
 requests==2.26.0
-json
 random
 string
