@@ -1,30 +1,12 @@
-import psycopg2
-import random
-import string
 from pages.main_page import MainPage
 from pages.admin_login_page import AdminLoginPage
 from pages.admin_page import AdminPage
 from pages.add_user_page import AddUserPage
 from pages.change_user_page import ChangeUserPage
-from helpers.db_query import do_find_user, do_find_group_for_user, do_delete_user
-
-# User params
-user_name = "Oleg"
+from helpers.testdata import AdminCreds, CreateUserAndAddGroup
 
 
-# random email generator
-def random_email_generator():
-    return ''.join(random.choice(string.ascii_letters) for x in range(10))
-
-
-user_email = random_email_generator() + "@mac-24.com"
-
-
-# Postgres db connection params
-myConnection = psycopg2.connect(host='localhost', user='postgres', password='postgres', dbname='postgres')
-
-
-def test_tc_2(browser):
+def test_add_user_to_group(browser, create_user_add_group_check_usergroup):
 
     # Open app
     main_page = MainPage(browser)
@@ -35,7 +17,10 @@ def test_tc_2(browser):
     main_page.open_admin_page()
     admin_login_page = AdminLoginPage(browser)
     admin_login_page.should_be_admin_login_page()
-    admin_login_page.login_to_admin_account("yaroslav", "123456Aa!")
+    admin_login_page.login_to_admin_account(
+        AdminCreds.admin_login,
+        AdminCreds.admin_password
+    )
     admin_page = AdminPage(browser)
     admin_page.should_be_admin_page()
 
@@ -43,21 +28,15 @@ def test_tc_2(browser):
     admin_page.open_user_page()
     add_user_page = AddUserPage(browser)
     add_user_page.should_be_add_user_page()
-    add_user_page.create_user(user_name, "123123Aa!", "123123Aa!")
+    add_user_page.create_user(
+        CreateUserAndAddGroup.user_name,
+        CreateUserAndAddGroup.user_password,
+        CreateUserAndAddGroup.user_password
+    )
     change_user_page = ChangeUserPage(browser)
     change_user_page.should_be_change_user_page()
 
     # Add group for the new user
     change_user_page.add_group_for_user()
-    change_user_page.add_user_email(user_email)
+    change_user_page.add_user_email(CreateUserAndAddGroup.user_email)
     change_user_page.click_on_save_button()
-
-    # Find added user in DB
-    do_find_user(myConnection, user_name, user_email)
-
-    # Check that user is in the group
-    do_find_group_for_user(myConnection, user_email, "First")
-
-    # Teardown: Remove created user from table
-    do_delete_user(myConnection, user_name, user_email)
-    myConnection.close()

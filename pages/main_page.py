@@ -12,5 +12,3 @@ class MainPage(BasePage):
 
     def open_admin_page(self):
         self.find_element(MainPageLocators.LOCATOR_ADMIN_BUTTON).click()
-
-
