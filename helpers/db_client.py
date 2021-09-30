@@ -4,17 +4,18 @@ import psycopg2
 class DB:
     def __init__(self):
 
-        self.host = '127.0.0.1'
-        self.port = '5432'
-        self.user = 'postgres'
-        self.password = 'postgres'
-        self.dbname = 'postgres'
+        #self.host = '127.0.0.1'
+        #self.port = '5432'
+        #self.user = 'postgres'
+        #self.password = 'postgres'
+        #self.dbname = 'postgres'
         self.conn = psycopg2.connect(
-            host=self.host,
-            port=self.port,
-            user=self.user,
-            password=self.password,
-            database=self.dbname
+            dbname='postgres'
+            host='127.0.0.1',
+            port='5432',
+            user='postgres',
+            password='postgres',
+            database='postgres'
         )
         self.cur = self.conn.cursor()
 
