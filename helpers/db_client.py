@@ -7,7 +7,12 @@ class DB:
         self.user = 'postgres'
         self.password = 'postgres'
         self.dbname = 'postgres'
-        self.conn = psycopg2.connect(host=self.host, user='postgres', password='postgres', dbname='postgres')
+        self.conn = psycopg2.connect(
+            host=self.host,
+            user=self.user,
+            password=self.password,
+            dbname=self.dbname
+        )
         self.cur = self.conn.cursor()
 
     # Insert new group query
