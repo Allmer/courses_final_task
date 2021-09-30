@@ -1,6 +1,6 @@
 from selenium import webdriver
 import pytest
-from helpers.db_query import DB
+from helpers.db_client import DB
 from helpers.testdata import CreateBDGroup, CreateUserAndAddGroup
 
 
@@ -21,11 +21,10 @@ def browser():
 
 
 @pytest.fixture
-def add_bd_group_and_delete_group():
+def delete_group():
     # Create DB connection
     db = DB()
-    # Creating group in DB table
-    db.do_insert_group(CreateBDGroup.group_name_tcbg)
+
     yield
     # Browser test
     # Teardown: delete group in DB table
@@ -35,18 +34,11 @@ def add_bd_group_and_delete_group():
 
 
 @pytest.fixture
-def create_user_add_group_check_usergroup():
-    # Create DB connection
+def delete_user():
+
     db = DB()
     yield
-    db.do_find_user(
-        CreateUserAndAddGroup.user_name,
-        CreateUserAndAddGroup.user_email
-    )
-    db.do_find_group_for_user(
-        CreateUserAndAddGroup.user_email,
-        CreateUserAndAddGroup.group_name_tcuaag
-    )
+
     db.do_delete_user(
         CreateUserAndAddGroup.user_name,
         CreateUserAndAddGroup.user_email

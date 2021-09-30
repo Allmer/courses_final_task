@@ -4,12 +4,13 @@ from pages.admin_page import AdminPage
 from pages.add_user_page import AddUserPage
 from pages.change_user_page import ChangeUserPage
 from helpers.testdata import AdminCreds, CreateUserAndAddGroup
+from helpers.db_client import DB
 import allure
 
 
 @allure.story("Run app, open admin panel, create user, add user to group"
               "and check that user belongs to group in BD")
-def test_add_user_to_group(browser, create_user_add_group_check_usergroup):
+def test_add_user_to_group(browser, delete_user):
 
     # Open app
     with allure.step("Open app"):
@@ -51,11 +52,26 @@ def test_add_user_to_group(browser, create_user_add_group_check_usergroup):
         change_user_page.should_be_change_user_page()
 
     # Add group for the new user
-    with allure.step("Select group for new user"):
+    with allure.step(f"Select {CreateUserAndAddGroup.group_name_tcuaag}"
+                     f"group for new user"):
         change_user_page.add_group_for_user()
 
-    with allure.step("Add user email"):
+    with allure.step(f"Add user email {CreateUserAndAddGroup.user_email}"):
         change_user_page.add_user_email(CreateUserAndAddGroup.user_email)
 
-    with allure.step("Saving new user data"):
+    with allure.step("Click on save button"):
         change_user_page.click_on_save_button()
+
+    # Check that new user added to group in DB
+    with allure.step(f"Find user {CreateUserAndAddGroup.user_name} by username and email in DB"):
+        db = DB()
+        db.do_find_user(
+            CreateUserAndAddGroup.user_name,
+            CreateUserAndAddGroup.user_email
+        )
+
+    with allure.step("Find user group in DB"):
+        db.do_find_group_for_user(
+            CreateUserAndAddGroup.user_email,
+            CreateUserAndAddGroup.group_name_tcuaag
+        )
