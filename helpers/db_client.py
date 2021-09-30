@@ -3,12 +3,15 @@ import psycopg2
 
 class DB:
     def __init__(self):
-        self.host = '0.0.0.0'
+
+        self.host = 'localhost'
+        self.port = 5432
         self.user = 'postgres'
         self.password = 'postgres'
         self.dbname = 'postgres'
         self.conn = psycopg2.connect(
             host=self.host,
+            port=self.port,
             user=self.user,
             password=self.password,
             dbname=self.dbname
