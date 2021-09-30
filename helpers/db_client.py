@@ -10,7 +10,7 @@ class DB:
         self.password = 'postgres'
         self.dbname = 'postgres'
         self.conn = psycopg2.connect(
-            dbname=self.dbname
+            dbname=self.dbname,
             host=self.host,
             port=self.port,
             user=self.user,
