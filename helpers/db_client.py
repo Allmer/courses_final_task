@@ -3,11 +3,18 @@ import psycopg2
 
 class DB:
     def __init__(self):
-        self.host = '127.0.0.1'
+        self.host = 'localhost'
+        self.port = 5432
         self.user = 'postgres'
         self.password = 'postgres'
         self.dbname = 'postgres'
-        self.conn = psycopg2.connect(host=self.host, user='postgres', password='postgres', dbname='postgres')
+        self.conn = psycopg2.connect(
+            host=self.host,
+            port=self.port,
+            user=self.user,
+            password=self.password,
+            dbname=self.dbname
+        )
         self.cur = self.conn.cursor()
 
     # Insert new group query
