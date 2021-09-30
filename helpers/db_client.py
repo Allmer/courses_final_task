@@ -5,7 +5,7 @@ class DB:
     def __init__(self):
 
         self.host = '127.0.0.1'
-        self.port = 5432
+        self.port = '5432'
         self.user = 'postgres'
         self.password = 'postgres'
         self.dbname = 'postgres'
