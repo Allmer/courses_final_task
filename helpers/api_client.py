@@ -1,6 +1,9 @@
 import requests
 import json
 import helpers.testdata
+from requests.packages.urllib3.util import Retry
+from requests.adapters import HTTPAdapter
+from requests import Session
 
 
 class ApiTesting:
@@ -27,8 +30,6 @@ class ApiTesting:
         response = requests.post(self.base_url, data=json.dumps(self.request_data), headers=self.headers)
         result = response.status_code
 
-        #assert result == 200, f'Status code {result} is not eq 200'
-
         # Check if user is really created
         username = self.request_data["username"]
         check_url = self.base_url + "/" + username
@@ -38,7 +39,6 @@ class ApiTesting:
             result_of_check = response.status_code
         else:
             assert result == 200, f'Status code {result} is not eq 200'
-
 
     # User login
     def user_login(self):
@@ -51,14 +51,17 @@ class ApiTesting:
 
         assert result == 200, f'Status code {result} is not eq 200'
 
-    # Collecting user info
+    # Collecting user info with retries
     def collect_user_data(self):
+        s = Session()
+        s.mount('https://', HTTPAdapter(max_retries=Retry(
+            total=2,
+            status_forcelist=[404]
+        )))
         username = self.request_data["username"]
         url = self.base_url + "/" + username
-
-        response = requests.get(url, headers=self.headers)
+        response = s.get(url, headers=self.headers)
         result = response.status_code
-
         assert result == 200, f'Status code {result} is not eq 200'
 
     # User logout
@@ -70,12 +73,17 @@ class ApiTesting:
 
         assert result == 200, f'Status code {result} is not eq 200'
 
-    # User deletion
+    # User deletion with retries
     def user_delete(self):
+        s = Session()
+        s.mount('https://', HTTPAdapter(max_retries=Retry(
+            total=2,
+            status_forcelist=[404]
+        )))
         username = self.request_data["username"]
         url = self.base_url + "/" + username
 
-        response = requests.delete(url, headers=self.headers)
+        response = s.delete(url, headers=self.headers)
         result = response.status_code
 
         assert result == 200, f'Status code {result} is not eq 200'
