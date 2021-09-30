@@ -3,12 +3,18 @@ from pages.admin_login_page import AdminLoginPage
 from pages.admin_page import AdminPage
 from pages.groups_page import GroupsPage
 from helpers.testdata import AdminCreds, CreateBDGroup
+from helpers.db_client import DB
 import allure
 
 
 @allure.story("Create group in BD "
               "and check in admin panel if new group is displayed")
-def test_add_group_check_group(browser, add_bd_group_and_delete_group):
+def test_add_group_check_group(browser, delete_group):
+
+    with allure.step(f"Create group {CreateBDGroup.group_name_tcbg}"
+                     f"in DB table"):
+        db = DB()
+        db.do_insert_group(CreateBDGroup.group_name_tcbg)
 
     with allure.step("Open app"):
         main_page = MainPage(browser)

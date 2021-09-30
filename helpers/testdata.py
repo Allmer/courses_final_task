@@ -7,6 +7,20 @@ def random_char():
     return ''.join(random.choice(string.ascii_letters) for i in range(10))
 
 
+# random user id generator
+def random_id_generator():
+    return ''.join(random.choice(string.digits) for i in range(10))
+
+
+# random username generator
+def random_username_generator():
+    return ''.join(random.choice(string.ascii_letters) for i in range(10))
+
+
+user_id = random_id_generator()
+user_name = random_username_generator()
+
+
 # test_create_bd_group
 class CreateBDGroup:
     group_name_tcbg = "Third"
