@@ -6,8 +6,8 @@ import allure
 @allure.story("Test API requests")
 def test_user_add_login_getdata_logout_delete():
 
-    with allure.step(f"Create User with id {helpers.testdata.user_id},"
-                     f"username {helpers.testdata.user_name}"):
+    with allure.step(f"Create User with id: {helpers.testdata.user_id},"
+                     f" username: {helpers.testdata.user_name}"):
         api = ApiTesting()
         api.create_user()
 
