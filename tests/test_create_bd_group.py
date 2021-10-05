@@ -12,7 +12,7 @@ import allure
 def test_add_group_check_group(browser, delete_group):
 
     with allure.step(f"Create group {CreateBDGroup.group_name_tcbg}"
-                     f"in DB table"):
+                     f" in DB table"):
         db = DB()
         db.do_insert_group(CreateBDGroup.group_name_tcbg)
 
