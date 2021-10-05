@@ -7,9 +7,9 @@ from helpers.testdata import CreateBDGroup, CreateUserAndAddGroup
 @pytest.fixture
 def browser():
     options = webdriver.ChromeOptions()
-    #options.headless = True
-    #options.add_argument("--no-sandbox")
-    #options.add_argument("--disable-gpu")
+    options.headless = True
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-gpu")
     driver = webdriver.Chrome(
         executable_path="/usr/local/bin/chromedriver",
         options=options
