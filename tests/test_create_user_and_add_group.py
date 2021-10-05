@@ -40,7 +40,8 @@ def test_add_user_to_group(browser, delete_user):
         add_user_page = AddUserPage(browser)
         add_user_page.should_be_add_user_page()
 
-    with allure.step("Create new user"):
+    with allure.step(f"Create new user with name"
+                     f" {CreateUserAndAddGroup.user_name}"):
         add_user_page.create_user(
             CreateUserAndAddGroup.user_name,
             CreateUserAndAddGroup.user_password,

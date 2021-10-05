@@ -23,7 +23,7 @@ user_name = random_username_generator()
 
 # test_create_bd_group
 class CreateBDGroup:
-    group_name_tcbg = "Third"
+    group_name_tcbg = random_char()
 
 
 # Admin user credentials
