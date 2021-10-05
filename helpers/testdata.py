@@ -34,7 +34,7 @@ class AdminCreds:
 
 # test_create_user_and_add_group
 class CreateUserAndAddGroup:
-    user_name = "Oleg"
+    user_name = random_username_generator()
     user_email = random_char() + "@mac-24.com"
     user_password = "123123Aa!"
     group_name_tcuaag = "First"
